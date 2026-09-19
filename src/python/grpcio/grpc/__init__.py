@@ -595,6 +595,8 @@ class ChannelCredentials:
     _credentials: _cygrpc.ChannelCredentials
 
     def __init__(self, credentials):
+        if credentials is None:
+            raise ValueError("Channel credentials may not be None.")
         self._credentials = credentials
 
 
@@ -612,6 +614,8 @@ class CallCredentials:
     """
 
     def __init__(self, credentials):
+        if credentials is None:
+            raise ValueError("Call credentials may not be None.")
         self._credentials = credentials
 
 
@@ -662,6 +666,8 @@ class ServerCredentials:
     """
 
     def __init__(self, credentials):
+        if credentials is None:
+            raise ValueError("Server credentials may not be None.")
         self._credentials = credentials
 
 
