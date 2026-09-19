@@ -67,6 +67,23 @@ class CredentialsTest(unittest.TestCase):
             certificate_chain=None,
         )
 
+    def test_none_underlying_credentials(self):
+        for credential_class in (
+            grpc.ChannelCredentials,
+            grpc.CallCredentials,
+            grpc.ServerCredentials,
+        ):
+            with self.assertRaises(ValueError):
+                credential_class(None)
+
+    def test_factories_reject_wrappers_without_credentials(self):
+        with self.assertRaises(ValueError):
+            grpc.compute_engine_channel_credentials(
+                grpc.CallCredentials(None)
+            )
+        with self.assertRaises(ValueError):
+            grpc.xds_server_credentials(grpc.ServerCredentials(None))
+
 
 if __name__ == "__main__":
     logging.basicConfig()
